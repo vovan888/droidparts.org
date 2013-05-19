@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'DroidParts'
-copyright = u'2013, Alex Yanchenko'
+copyright = u'2014, Alex Yanchenko'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -123,6 +123,11 @@ html_title = '%s' % (project)
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# Add any extra paths that contain custom files (such as robots.txt or
+# .htaccess) here, relative to this directory. These files are copied
+# directly to the root of the documentation.
+#html_extra_path = []
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
