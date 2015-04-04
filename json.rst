@@ -14,7 +14,7 @@ Model classes must extend ``Model`` or it's subclass (e.g. ``Entity``) and have 
 ----------------
 
 * ``key`` - JSON key name.
-* ``optional`` - if true, won't throw an exception if the key is missing.
+* ``optional`` - if true, won't throw an exception if the key is missing and won't put a key with a null value.
 
 Use ``JSON.SUB`` separator in ``name`` element to access nested object fields.
 
@@ -38,3 +38,7 @@ Has the following methods:
 * ``ModelType deserialize(JSONObject obj)``
 * ``JSONArray serializeAll(Collection<ModelType> items)``
 * ``ArrayList<ModelType> deserializeAll(JSONArray arr)``
+
+Customization
+-------------
+Override ``readFromJSON(...)`` and/or ``putToJSON(...)`` methods.

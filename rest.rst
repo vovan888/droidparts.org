@@ -37,8 +37,7 @@ Usage
 * ``getInputStream(String uri)``
 * ``get(String uri, long ifModifiedSince, String etag, boolean body)``
 * ``post(String uri, String contentType, String data)``
-* ``postMultipart(String uri, String name, File file)``
-* ``postMultipart(String uri, String name, String contentType, File file)``
+* ``postMultipart(String uri, String name, String contentType, String fileName, InputStream is)``
 * ``put(String uri, String contentType, String data)``
 * ``delete(String uri)``
 
@@ -48,10 +47,11 @@ Each of these methods returns a ``HTTPResponse`` or throws a ``HTTPException``.
 RESTClient2
 ===========
 
-*RESTClient2* is a subclass that adds JSON support.
+*RESTClient2* is a subclass that adds JSON support & more features.
 
 * ``JSONObject getJSONObject(String uri)``
 * ``HTTPResponse post(String uri, JSONArray data)``
+* ``HTTPResponse postMultipart(String uri, String name, File file)``
 * ...
 
 Workers

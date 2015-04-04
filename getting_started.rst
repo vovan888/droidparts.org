@@ -21,8 +21,8 @@ and you'll see:
     * ``droidparts-sample`` - an older fragment-free app.
 #. *droidparts-test* - unit tests.
     
-Obtaining
-=========
+Integration
+===========
 
 There are several options:
 
@@ -30,11 +30,21 @@ There are several options:
 
 * Specify as a Gradle or Maven dependency::
 
-   <dependency>
-     <groupId>org.droidparts</groupId>
-     <artifactId>droidparts</artifactId>
-     <version>${version.from.jar.above}</version>
-   </dependency>
+.. code-block:: groovy
+
+    dependencies {
+        compile 'org.droidparts:droidparts:${version.from.jar.above}'
+    }
+
+.. code-block:: xml
+
+    <dependency>
+      <groupId>org.droidparts</groupId>
+      <artifactId>droidparts</artifactId>
+      <version>${version.from.jar.above}</version>
+    </dependency>
+
+Example: `build.gradle <https://github.com/yanchenko/droidparts/blob/master/droidparts-samples/DroidPartsGram/build.gradle>`_ from DroidPartsGram.
 
 Dependencies
 ============
@@ -44,7 +54,6 @@ Optional dependencies:
 * *Android Support library* - if using classes in ``*.support.*`` packages (part of *droidparts-support*).
   Also required by ``ImageFetcher`` for in-memory cache to work on pre-3.0 Androids.
 * *Apache HttpMime* required by ``RESTClient`` if POSTing multipart files on pre-3.0 Androids.
-* *OkHttp* if using ``OkHttpWorker``.
 
 Configuration
 =============
@@ -62,7 +71,6 @@ For that you'll need to subclass:
 ProGuard
 ========
 
-If using ProGuard, remember to include *proguard-droidparts.cfg* in *project.properties*.
-Like so::
+If using ProGuard, remember to include *proguard-droidparts.cfg*::
 
    proguard.config=${sdk.dir}/tools/proguard/proguard-android-optimize.txt:../droidparts/proguard-droidparts.cfg

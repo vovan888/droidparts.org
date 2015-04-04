@@ -3,7 +3,7 @@ DroidParts Support Library
 ==========================
 
 Named after `Android Support Library <http://developer.android.com/tools/extras/support-library.html>`_,
-*droidparts-support.jar* provides 3-in-1 Fragments support on pre-3.0 Androids.
+*droidparts-support.jar* provides Fragments support on pre-3.0 Androids.
 
 Overview
 ========

@@ -26,5 +26,6 @@ XMLSerializer
 
 Has the following methods:
 
+* ``static Document parseDocument(String xml)``
 * ``ModelType deserialize(Node node)``
 * ``ArrayList<ModelType> deserializeAll(NodeList nodeList)``
