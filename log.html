@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Logging &mdash; DroidParts</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'HEAD',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="DroidParts" href="index.html" />
+    <link rel="next" title="Utils" href="utils.html" />
+    <link rel="prev" title="ImageFetcher" href="image_fetcher.html" />
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-40636409-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="utils.html" title="Utils"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="image_fetcher.html" title="ImageFetcher"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="logging">
+<h1>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">L</span></code> takes the pain away from logging.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">L</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="s">&quot;DroidParts is awesome!&quot;</span><span class="o">);</span>
+<span class="c1">// or</span>
+<span class="n">L</span><span class="o">.</span><span class="na">w</span><span class="o">(</span><span class="n">anyObject</span><span class="o">);</span>
+<span class="c1">// or</span>
+<span class="n">L</span><span class="o">.</span><span class="na">a</span><span class="o">(</span><span class="s">&quot;WTF?! %s&quot;</span><span class="o">,</span> <span class="n">str</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>will result in <code class="docutils literal"><span class="pre">LogCat</span></code> output like:</p>
+<div class="highlight-python"><div class="highlight"><pre>ClassName.methodName():50 DroidParts is awesome!
+</pre></div>
+</div>
+<p>in development mode.
+In a production build (a signed .apk) the tag will be the package name.</p>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Loglevel is configured in
+<code class="docutils literal"><span class="pre">AndroidManifest.xml</span></code>:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;application</span> <span class="nt">&gt;</span>
+
+    <span class="nt">&lt;meta-data</span>
+        <span class="na">android:name=</span><span class="s">&quot;droidparts_log_level&quot;</span>
+        <span class="na">android:value=</span><span class="s">&quot;warn&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/application&gt;</span>
+</pre></div>
+</div>
+<p>Available loglevels:</p>
+<ul class="simple">
+<li>disable</li>
+<li>verbose</li>
+<li>debug</li>
+<li>info</li>
+<li>warn</li>
+<li>error</li>
+<li>assert</li>
+</ul>
+<p>By default all log output is displayed.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Logging</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="image_fetcher.html"
+                        title="previous chapter">ImageFetcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="utils.html"
+                        title="next chapter">Utils</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="utils.html" title="Utils"
+             >next</a></li>
+        <li class="right" >
+          <a href="image_fetcher.html" title="ImageFetcher"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>
+<div style="text-align: center; margin-top:10px;">
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=watch&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=fork&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://droidparts.org" data-text="DroidParts — a carefully crafted Android framework." data-via="droidparts"></a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	
+	<div class="g-plusone" data-size="medium" data-href="http://droidparts.org"></div>
+	<script type="text/javascript">
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+	
+	<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fdroidparts.org&amp;width=100&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=617943188236846" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
+	
+    
+</div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Alex Yanchenko.
+    </div>
+
+  </body>
+</html>

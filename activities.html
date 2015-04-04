@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Activities &mdash; DroidParts</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'HEAD',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="DroidParts" href="index.html" />
+    <link rel="next" title="Object-Relational Mapping" href="orm.html" />
+    <link rel="prev" title="Dependency Injection" href="di.html" />
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-40636409-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="orm.html" title="Object-Relational Mapping"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="di.html" title="Dependency Injection"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="activities">
+<h1>Activities<a class="headerlink" href="#activities" title="Permalink to this headline">¶</a></h1>
+<p>DroidParts has several variants of base Activities living in the following packages:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">org.droidparts.activity.*</span></code> - Android 3.0+ with fragments support.</li>
+<li><code class="docutils literal"><span class="pre">org.droidparts.activity.legacy.*</span></code> - Android 2.2+ without Fragments.</li>
+<li><code class="docutils literal"><span class="pre">org.droidparts.activity.support.v4.*</span></code> - Android 2.2+ with <em>Android Support Library</em> Fragments.</li>
+<li><code class="docutils literal"><span class="pre">org.droidparts.activity.support.v7.*</span></code> - Android 2.2+ with <em>Android Support Library</em> Fragments &amp; ActionBar.</li>
+</ul>
+<p>By extending appropriate Activity, you get injection working. An alternative is calling <code class="docutils literal"><span class="pre">Injector.inject(this);</span></code>.</p>
+<p>You&#8217;ll get an extra lifecycle method called <code class="docutils literal"><span class="pre">onPreInject()</span></code>.
+It&#8217;s used to set some data that should be present at injection time. Usually a layout.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@InjectView</span>
+<span class="kd">private</span> <span class="n">Button</span> <span class="n">btn</span><span class="o">;</span>
+
+<span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPreInject</span><span class="o">()</span> <span class="o">{</span>
+   <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+   <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span> <span class="c1">// &lt;- btn is injected during this call.</span>
+   <span class="c1">// Too late to set content view here.</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="section" id="activity">
+<h2>Activity<a class="headerlink" href="#activity" title="Permalink to this headline">¶</a></h2>
+<p>There are variants of this class for pre-3.0 Androids with or w/o ActionBar support &amp; for modern Androids.
+The versions with ActionBar support have the following extra methods:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">setActionBarReloadMenuItem(MenuItem</span> <span class="pre">menuItem)</span></code> - which MenuItem triggers reload, if any.</li>
+<li><code class="docutils literal"><span class="pre">setActionBarLoadingIndicatorVisible(boolean</span> <span class="pre">visible)</span></code> - show spinner for the item set on previous step.</li>
+<li><code class="docutils literal"><span class="pre">setFragmentVisible(boolean</span> <span class="pre">visible,</span> <span class="pre">Fragment...</span> <span class="pre">fragments)</span></code> - a shortcut method to show/hide Fragments.</li>
+</ul>
+</div>
+<div class="section" id="singlefragmentactivity">
+<h2>SingleFragmentActivity<a class="headerlink" href="#singlefragmentactivity" title="Permalink to this headline">¶</a></h2>
+<p>Base class for Activities with only one Fragment.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">protected</span> <span class="pre">abstract</span> <span class="pre">F</span> <span class="pre">onCreateFragment()</span></code> - implement to return a Fragment.</li>
+</ul>
+</div>
+<div class="section" id="tabbedfragmentactivity">
+<h2>TabbedFragmentActivity<a class="headerlink" href="#tabbedfragmentactivity" title="Permalink to this headline">¶</a></h2>
+<p>ActionBar-based tabs navigation with custom animation support.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">addTab(ActionBar.Tab</span> <span class="pre">tab,</span> <span class="pre">Fragment...</span> <span class="pre">tabFragments)</span></code> &amp; <code class="docutils literal"><span class="pre">addTab(int</span> <span class="pre">position,</span> <span class="pre">ActionBar.Tab</span> <span class="pre">tab,</span> <span class="pre">Fragment...</span> <span class="pre">tabFragments)</span></code></li>
+<li><code class="docutils literal"><span class="pre">setCustomAnimations(int</span> <span class="pre">enter,</span> <span class="pre">int</span> <span class="pre">exit)</span></code></li>
+<li><code class="docutils literal"><span class="pre">setCurrentTab(int</span> <span class="pre">position)</span></code> &amp; <code class="docutils literal"><span class="pre">getCurrentTab()</span></code></li>
+<li><code class="docutils literal"><span class="pre">onTabChanged(int</span> <span class="pre">position)</span></code></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Activities</a><ul>
+<li><a class="reference internal" href="#activity">Activity</a></li>
+<li><a class="reference internal" href="#singlefragmentactivity">SingleFragmentActivity</a></li>
+<li><a class="reference internal" href="#tabbedfragmentactivity">TabbedFragmentActivity</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="di.html"
+                        title="previous chapter">Dependency Injection</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="orm.html"
+                        title="next chapter">Object-Relational Mapping</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="orm.html" title="Object-Relational Mapping"
+             >next</a></li>
+        <li class="right" >
+          <a href="di.html" title="Dependency Injection"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>
+<div style="text-align: center; margin-top:10px;">
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=watch&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=fork&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://droidparts.org" data-text="DroidParts — a carefully crafted Android framework." data-via="droidparts"></a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	
+	<div class="g-plusone" data-size="medium" data-href="http://droidparts.org"></div>
+	<script type="text/javascript">
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+	
+	<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fdroidparts.org&amp;width=100&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=617943188236846" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
+	
+    
+</div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Alex Yanchenko.
+    </div>
+
+  </body>
+</html>

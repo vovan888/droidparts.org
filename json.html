@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>JSON (de)serialization &mdash; DroidParts</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'HEAD',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="DroidParts" href="index.html" />
+    <link rel="next" title="XML deserialization" href="xml.html" />
+    <link rel="prev" title="Adapters" href="adapters.html" />
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-40636409-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="xml.html" title="XML deserialization"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="adapters.html" title="Adapters"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="json-de-serialization">
+<h1>JSON (de)serialization<a class="headerlink" href="#json-de-serialization" title="Permalink to this headline">¶</a></h1>
+<p>A simple way to convert Models to JSON objects &amp; back. Conceptually similar to <a class="reference internal" href="orm.html"><em>ORM</em></a>.
+Based on the built-in <code class="docutils literal"><span class="pre">org.json</span></code> parser.</p>
+<div class="section" id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<p>Model classes must extend <code class="docutils literal"><span class="pre">Model</span></code> or it&#8217;s subclass (e.g. <code class="docutils literal"><span class="pre">Entity</span></code>) and have fields annotated with <code class="docutils literal"><span class="pre">&#64;JSON</span></code>.</p>
+<div class="section" id="json-annotation">
+<h3>&#64;JSON Annotation<a class="headerlink" href="#json-annotation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">key</span></code> - JSON key name.</li>
+<li><code class="docutils literal"><span class="pre">optional</span></code> - if true, won&#8217;t throw an exception if the key is missing and won&#8217;t put a key with a null value.</li>
+</ul>
+<p>Use <code class="docutils literal"><span class="pre">JSON.SUB</span></code> separator in <code class="docutils literal"><span class="pre">name</span></code> element to access nested object fields.</p>
+<p>E.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre>{
+  &quot;sub_obj&quot;: {
+    &quot;str&quot;: &quot;val&quot;
+  }
+}
+
+@JSON(key = &quot;sub_obj&quot; + JSON.SUB + &quot;str&quot;)
+public String str;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="jsonserializer">
+<h2>JSONSerializer<a class="headerlink" href="#jsonserializer" title="Permalink to this headline">¶</a></h2>
+<p>Has the following methods:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">JSONObject</span> <span class="pre">serialize(ModelType</span> <span class="pre">item)</span></code></li>
+<li><code class="docutils literal"><span class="pre">ModelType</span> <span class="pre">deserialize(JSONObject</span> <span class="pre">obj)</span></code></li>
+<li><code class="docutils literal"><span class="pre">JSONArray</span> <span class="pre">serializeAll(Collection&lt;ModelType&gt;</span> <span class="pre">items)</span></code></li>
+<li><code class="docutils literal"><span class="pre">ArrayList&lt;ModelType&gt;</span> <span class="pre">deserializeAll(JSONArray</span> <span class="pre">arr)</span></code></li>
+</ul>
+<div class="section" id="customization">
+<h3>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">¶</a></h3>
+<p>Override <code class="docutils literal"><span class="pre">readFromJSON(...)</span></code> and/or <code class="docutils literal"><span class="pre">putToJSON(...)</span></code> methods.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">JSON (de)serialization</a><ul>
+<li><a class="reference internal" href="#models">Models</a><ul>
+<li><a class="reference internal" href="#json-annotation">&#64;JSON Annotation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#jsonserializer">JSONSerializer</a><ul>
+<li><a class="reference internal" href="#customization">Customization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="adapters.html"
+                        title="previous chapter">Adapters</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="xml.html"
+                        title="next chapter">XML deserialization</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="xml.html" title="XML deserialization"
+             >next</a></li>
+        <li class="right" >
+          <a href="adapters.html" title="Adapters"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>
+<div style="text-align: center; margin-top:10px;">
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=watch&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=fork&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://droidparts.org" data-text="DroidParts — a carefully crafted Android framework." data-via="droidparts"></a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	
+	<div class="g-plusone" data-size="medium" data-href="http://droidparts.org"></div>
+	<script type="text/javascript">
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+	
+	<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fdroidparts.org&amp;width=100&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=617943188236846" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
+	
+    
+</div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Alex Yanchenko.
+    </div>
+
+  </body>
+</html>

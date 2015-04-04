@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dependency Injection &mdash; DroidParts</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'HEAD',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="DroidParts" href="index.html" />
+    <link rel="next" title="Activities" href="activities.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" />
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-40636409-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="activities.html" title="Activities"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dependency-injection">
+<h1>Dependency Injection<a class="headerlink" href="#dependency-injection" title="Permalink to this headline">¶</a></h1>
+<p>DroidParts injects views, fragments, services, resources, etc. out-of-box.
+Custom dependencies can be defined in a <code class="docutils literal"><span class="pre">DependencyProvider</span></code> class.</p>
+<p>Injection occurs automatically in classes that extend Activities/Services/Fragments that come with DroidParts.</p>
+<p>To inject manually, call <code class="docutils literal"><span class="pre">Injector.inject(...)</span></code>.</p>
+<div class="section" id="dependencyprovider">
+<h2>DependencyProvider<a class="headerlink" href="#dependencyprovider" title="Permalink to this headline">¶</a></h2>
+<p>DependencyProvider is a subclass of <code class="docutils literal"><span class="pre">AbstractDependencyProvider</span></code> with factory methods
+that return objects to be injected.</p>
+<p>The supported method signatures are:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="n">CustomObject</span> <span class="nf">getCustomObject</span><span class="o">();</span>
+<span class="c1">// and</span>
+<span class="kd">public</span> <span class="n">CustomObject</span> <span class="nf">getCustomObject</span><span class="o">(</span><span class="n">Context</span> <span class="n">ctx</span><span class="o">);</span>
+</pre></div>
+</div>
+<p>in the latter case <code class="docutils literal"><span class="pre">Context</span></code> will be the one that that requested injection (e.g. an <code class="docutils literal"><span class="pre">Acitvity</span></code>).</p>
+<p>To inject a singleton, make the corresponding method return the same instance each time it&#8217;s called.</p>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
+<p>The class you create must be specified in <code class="docutils literal"><span class="pre">AndroidManifest.xml</span></code>:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;application</span> <span class="nt">&gt;</span>
+
+    <span class="nt">&lt;meta-data</span>
+        <span class="na">android:name=</span><span class="s">&quot;droidparts_dependency_provider&quot;</span>
+        <span class="na">android:value=</span><span class="s">&quot;.DependencyProvider&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/application&gt;</span>
+</pre></div>
+</div>
+<p>There&#8217;s one special method that needs to be implemented for <a class="reference internal" href="orm.html"><em>Object-Relational Mapping</em></a></p>
+<div class="highlight-python"><div class="highlight"><pre>public AbstractDBOpenHelper getDBOpenHelper();
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="annotations">
+<h2>Annotations<a class="headerlink" href="#annotations" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><em>&#64;InjectView</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre>@InjectView
+Button btn1;
+// btn1 = (Button)findViewById(R.id.btn1)
+
+@InjectView(id=R.id.view_btn, click=true)
+Button btn2;
+// btn2 = (Button)findViewById(R.id.view_btn)
+// btn2.setOnClickListener(this);
+</pre></div>
+</div>
+<p>For <code class="docutils literal"><span class="pre">click=true</span></code> to work, the class must implement <code class="docutils literal"><span class="pre">View.OnClickListener</span></code>.
+Also works for Preferences.</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>&#64;InjectBundleExtra</em>:</dt>
+<dd><ul class="first last simple">
+<li>in an <code class="docutils literal"><span class="pre">Activity</span></code> = <code class="docutils literal"><span class="pre">getIntent().getExtras().getXX()</span></code>.</li>
+<li>in a <code class="docutils literal"><span class="pre">Fragment</span></code> = <code class="docutils literal"><span class="pre">getArguments().getXX()</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><em>&#64;InjectDependency</em> - custom dependency from <code class="docutils literal"><span class="pre">DependencyProvider</span></code>.</p>
+</li>
+<li><p class="first"><em>&#64;InjectResource</em> - String, String[], Drawable, etc. from res.</p>
+</li>
+<li><p class="first"><em>&#64;InjectSystemService</em> = <code class="docutils literal"><span class="pre">getSystemSerice(Context.SERVICE_NAME)</span></code>.</p>
+</li>
+<li><p class="first"><em>&#64;InjectFragment</em> - in <code class="docutils literal"><span class="pre">FragmentActivity</span></code>, inject <code class="docutils literal"><span class="pre">Fragment</span></code> specified in layout xml.</p>
+</li>
+<li><p class="first"><em>&#64;InjectParentActivity</em> - in <code class="docutils literal"><span class="pre">Fragment</span></code>, inject the <code class="docutils literal"><span class="pre">Actvity</span></code> it belongs to.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Dependency Injection</a><ul>
+<li><a class="reference internal" href="#dependencyprovider">DependencyProvider</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#annotations">Annotations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="getting_started.html"
+                        title="previous chapter">Getting Started</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="activities.html"
+                        title="next chapter">Activities</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="activities.html" title="Activities"
+             >next</a></li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>
+<div style="text-align: center; margin-top:10px;">
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=watch&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=fork&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://droidparts.org" data-text="DroidParts — a carefully crafted Android framework." data-via="droidparts"></a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	
+	<div class="g-plusone" data-size="medium" data-href="http://droidparts.org"></div>
+	<script type="text/javascript">
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+	
+	<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fdroidparts.org&amp;width=100&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=617943188236846" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
+	
+    
+</div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Alex Yanchenko.
+    </div>
+
+  </body>
+</html>

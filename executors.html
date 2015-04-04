@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Working in Background &mdash; DroidParts</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'HEAD',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="DroidParts" href="index.html" />
+    <link rel="next" title="RESTClient" href="rest.html" />
+    <link rel="prev" title="Event Bus" href="event_bus.html" />
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-40636409-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest.html" title="RESTClient"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event_bus.html" title="Event Bus"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="working-in-background">
+<h1>Working in Background<a class="headerlink" href="#working-in-background" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="asynctask">
+<h2>AsyncTask<a class="headerlink" href="#asynctask" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">AsyncTask</span></code> &amp; <code class="docutils literal"><span class="pre">SimpleAsyncTask</span></code> support <code class="docutils literal"><span class="pre">AsyncTaskResultListener</span></code> that has methods to handle either a Result or an Exception.</p>
+<p>Subclass, overrride <code class="docutils literal"><span class="pre">Result</span> <span class="pre">onExecute([Params...</span> <span class="pre">params])</span> <span class="pre">throws</span> <span class="pre">Exception</span></code>;</p>
+<p>Override the following methods for any additional processing in the background:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">void</span> <span class="pre">onPostExecuteSuccess(Result</span> <span class="pre">result)</span></code></li>
+<li><code class="docutils literal"><span class="pre">void</span> <span class="pre">onPostExecuteFailure(Exception</span> <span class="pre">exception)</span></code></li>
+</ul>
+</div>
+<div class="section" id="intentservice">
+<h2>IntentService<a class="headerlink" href="#intentservice" title="Permalink to this headline">¶</a></h2>
+<p>Similarly, <code class="docutils literal"><span class="pre">IntentService</span></code> is extended to support <code class="docutils literal"><span class="pre">ResultReceiver</span></code>. Has <code class="docutils literal"><span class="pre">void</span> <span class="pre">removePendingIntents()</span></code> method.</p>
+<p>Subclass, overrride <code class="docutils literal"><span class="pre">Bundle</span> <span class="pre">onExecute(String</span> <span class="pre">action,</span> <span class="pre">Bundle</span> <span class="pre">data)</span> <span class="pre">throws</span> <span class="pre">Exception</span></code>;</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Working in Background</a><ul>
+<li><a class="reference internal" href="#asynctask">AsyncTask</a></li>
+<li><a class="reference internal" href="#intentservice">IntentService</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event_bus.html"
+                        title="previous chapter">Event Bus</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="rest.html"
+                        title="next chapter">RESTClient</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest.html" title="RESTClient"
+             >next</a></li>
+        <li class="right" >
+          <a href="event_bus.html" title="Event Bus"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">DroidParts</a> &raquo;</li> 
+      </ul>
+    </div>
+<div style="text-align: center; margin-top:10px;">
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=watch&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<iframe src="http://ghbtns.com/github-btn.html?user=yanchenko&repo=droidparts&type=fork&count=true"
+	  allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
+
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://droidparts.org" data-text="DroidParts — a carefully crafted Android framework." data-via="droidparts"></a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	
+	<div class="g-plusone" data-size="medium" data-href="http://droidparts.org"></div>
+	<script type="text/javascript">
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+	
+	<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fdroidparts.org&amp;width=100&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=617943188236846" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
+	
+    
+</div>
+
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Alex Yanchenko.
+    </div>
+
+  </body>
+</html>
